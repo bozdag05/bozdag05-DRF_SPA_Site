@@ -1,0 +1,118 @@
+{% extends "blog_game/base_blog_game.html" %}
+{% load static %}
+{% block title%}Страница поста{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <!--    ЭТО ЛЕВАЯ КОЛОНКА КОНТЕНТА ПОСТА -->
+        <div class="col-lg-8">
+            <!--    ЭТО ХЛЕБНЫЕ КРОШКИ -->
+            <nav aria-label="breadcrumb" class="my-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+                </ol>
+            </nav>
+            <!--    ЭТО ТЕЛО ПОСТА -->
+            <img class="img-fluid rounded" src="{{ post.image.url }}" alt="">
+            <hr>
+            <h6>Краткая информация:</h6>
+            <p class="lead">{{ post.information_card|safe }}</p>
+            <hr>
+            <h6>Описание:</h6>
+            <p class="lead">{{ post.description|safe }}</p>
+            <div class="d-flex justify-content-end">
+                <a href="" class="badge text-bg-info me-1">#{{ post.tag }}</a>
+
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <div class="lead">Автор: {{ post.author }}</div>
+                <ul>
+                    <div>Опубликовано: {{ post.created_at }}</div>
+                    <div>Обнавлено: {{ post.updated_at }}</div>
+                </ul>
+            </div>
+            <hr>
+            <!--    ЭТО КОМПОНЕНТ С КОММЕНТАРИЯМИ -->
+            <div class="card my-4">
+                <h5 class="card-header">Прокомментируй:</h5>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control mb-3" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <img class="rounded-circle" src="http://placehold.it/50x50" alt="">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5 class="mt-0">Патя Идрисова</h5>
+                    Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень
+                    важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное
+                    мнение по данной статье.
+                </div>
+
+            </div>
+        </div>
+        <!--    ЭТО ПРАВАЯ КОЛОНКА -->
+        <div class="col-md-4">
+            <div class="card my-4">
+                <h5 class="card-header">Тег</h5>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        <a href="" class="m-2 h5 text-primary">#{{ post.tag }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card my-4">
+                <h5 class="card-header">Последние статьи</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Раз пост</h5>
+                    <p class="card-text">Какой-то вступительный текст. Какой-то вступительный текст. Какой-то
+                        вступительный текст.</p>
+                    <a href="#" class="card-link">Ссылка на статью</a>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Два пост</h5>
+                    <p class="card-text">Какой-то вступительный текст. Какой-то вступительный текст. Какой-то
+                        вступительный текст.</p>
+                    <a href="#" class="card-link">Ссылка на статью</a>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Три пост</h5>
+                    <p class="card-text">Какой-то вступительный текст. Какой-то вступительный текст. Какой-то
+                        вступительный текст.</p>
+                    <a href="#" class="card-link">Ссылка на статью</a>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Четыре пост</h5>
+                    <p class="card-text">Какой-то вступительный текст. Какой-то вступительный текст. Какой-то
+                        вступительный текст.</p>
+                    <a href="#" class="card-link">Ссылка на статью</a>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Пять пост</h5>
+                    <p class="card-text">Какой-то вступительный текст. Какой-то вступительный текст. Какой-то
+                        вступительный текст.</p>
+                    <a href="#" class="card-link">Ссылка на статью</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pagination %}
+{% endblock %}
