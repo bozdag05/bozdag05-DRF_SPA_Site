@@ -1,0 +1,58 @@
+{% extends "blog_game/base_blog_game.html" %}
+{% load static %}
+{% block title%}Страница поста{% endblock %}
+
+{% block content %}
+<section class="my-registration-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <!--    ЭТО ХЛЕБНЫЕ КРОШКИ -->
+                <nav aria-label="breadcrumb" class="my-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Форма Авторизаци</li>
+                    </ol>
+                </nav>
+
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <p class="lead">Авторизация</p>
+                        {% if form.errors %}
+                            {% for filed in form %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <div>Имя пользователя:<label class="form-label visually-hidden">Имя пользователя</label>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div>Пароль:
+                                    <label class="form-label visually-hidden">Пароль</label>
+                                    {{ form.password1 }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block pagination %}
+
+{% endblock %}
