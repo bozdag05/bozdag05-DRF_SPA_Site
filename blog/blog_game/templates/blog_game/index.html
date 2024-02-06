@@ -1,0 +1,71 @@
+{% extends "blog_game/base_blog_game.html" %}
+{% load static %}
+{% block title %}Главная страница{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <h1 class="my-4 text-center">Viki.Game.RiI</h1>
+    <h2 class="my-4 text-center">Resistance is inevitable</h2>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="media/{{ post.image }}" alt="" class="card-img-top">
+                <div class="card-body">
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <p class="card-text">{{ post.information_card|safe|truncatechars:150 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                        </div>
+                        <ul>
+                            <li style="list-style: none"><small class="text-muted">Опубликовано: {{ post.created_at }}</small></li>
+                            <li style="list-style: none"><small class="text-muted">Обнавлено: {{ post.updated_at }}</small></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pagination %}
+<nav aria-label="Paginate me">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдущая</a>
+        </li>
+        {% elif page_obj.paginator.num_pages > 1 %}
+        <li class="page-item disabled ">
+            <a class="page-link" href="#" tabindex="-1">Предыдущая</a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.paginator.num_pages > 1 %}
+            {% for page_number in page_obj.paginator.page_range %}
+                {% if page_number == page_obj.number %}
+                    <li class="page-item active "><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+                {% endif %}
+            {% endfor%}
+        {% endif %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        </li>
+        {% elif page_obj.paginator.num_pages > 1  %}
+        <li class="page-item disabled ">
+            <a class="page-link" href="#">Следующая</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}
