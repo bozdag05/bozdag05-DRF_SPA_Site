@@ -40,3 +40,4 @@ class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя', max_length=100,
                                widget=forms.TextInput(attrs={'class': "form-control"}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': "form-control"}))
+
