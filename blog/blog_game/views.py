@@ -1,8 +1,8 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from .models import Post
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserLoginForm
 
 
 class HomeView(ListView):
@@ -28,9 +28,27 @@ def register(request):
             user = form.save()
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect("home")
 
     else:
         form = UserRegisterForm()
 
     return render(request, "blog_game/register.html", context={"form": form})
+
+
+def user_login(request):
+    if request.method == "POST":
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect("home")
+    else:
+        form = UserLoginForm()
+
+    return render(request, "blog_game/login.html", context={"form": form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("login")
