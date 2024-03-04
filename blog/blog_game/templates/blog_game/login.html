@@ -11,13 +11,13 @@
                 <nav aria-label="breadcrumb" class="my-4">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Форма регистрации</li>
+                        <li class="breadcrumb-item active" aria-current="page">Форма Авторизаци</li>
                     </ol>
                 </nav>
 
                 <div class="row justify-content-center">
                     <div class="col-6">
-                        <p class="lead">Регистрация</p>
+                        <p class="lead">Авторизация</p>
                         <form method="post">
                             {% csrf_token %}
                             <div class="mb-3">
@@ -26,24 +26,12 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <div>Электронная почта:
-                                    <label class="form-label visually-hidden">Электронная почта</label>
-                                    {{ form.email }}
-                                </div>
-                            </div>
-                            <div class="mb-3">
                                 <div>Пароль:
                                     <label class="form-label visually-hidden">Пароль</label>
-                                    {{ form.password1 }}
+                                    {{ form.password }}
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div>Подтверждения пароля:
-                                    <label class="form-label visually-hidden">Подтверждения пароля</label>
-                                    {{ form.password2 }}
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Зарегистрироватся</button>
+                            <button type="submit" class="btn btn-primary">Войти</button>
                         </form>
                     </div>
                 </div>
