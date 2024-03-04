@@ -132,6 +132,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'muhammadosmanov02@gmail.com'
+EMAIL_HOST_PASSWORD = 'rals pptb bfxh wyzb'
+DEFAULT_FROM_EMAIL = 'muhammadosmanov02@gmail.com'
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 ####################################
     ##  CKEDITOR CONFIGURATION ##

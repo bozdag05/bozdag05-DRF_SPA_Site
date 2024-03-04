@@ -1,8 +1,12 @@
-from django.contrib.auth import login, logout
+from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Post
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, ContactForm
 
 
 class HomeView(ListView):
@@ -23,12 +27,14 @@ class PostView(DetailView):
 
 def register(request):
     if request.method == "POST":
-        form = UserRegisterForm(data=request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            if user is not None:
-                login(request, user)
-                return redirect("home")
+            login(request, user)
+            messages.success(request, "Вы успешно зарегистрировались")
+            return redirect("home")
+        else:
+            messages.error(request, "Ошибка регистрации")
 
     else:
         form = UserRegisterForm()
@@ -38,11 +44,17 @@ def register(request):
 
 def user_login(request):
     if request.method == "POST":
-        form = UserLoginForm(request.POST)
+        form = UserLoginForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect("home")
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                messages.success(request, 'Вы успешно авторизовались')
+                login(request, user)
+                return redirect("home")
+        else:
+            messages.error(request, 'Ошибка авторизации')
     else:
         form = UserLoginForm()
 
@@ -52,3 +64,29 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("login")
+
+
+class ContactView(View):
+    def get(self, request, *args, **kwargs):
+        form = ContactForm()
+        return render(request, "blog_game/contact.html", context={"form": form, "title": "Тех. поддержка"})
+
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            try:
+                send_mail(f" От {name} | {subject}", message, email, ["muhammadosmanov02@gmail.com"])
+            except BadHeaderError:
+                messages.error(request, "Невалидный загаловок")
+            messages.success(request, "Ваше письмо отправлено")
+        return render(request, "blog_game/success.html", context={"form": form})
+
+
+class SuccessView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'blog_game/success.html', context={"title": "جزاكم الله خيرا"})
