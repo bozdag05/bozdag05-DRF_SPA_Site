@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.core.mail import send_mail, BadHeaderError
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
@@ -15,7 +16,7 @@ class HomeView(ListView):
     template_name = "blog_game/index.html"
     context_object_name = "posts"
     ordering = "-created_at"
-    paginate_by = 2
+    paginate_by = 6
 
 
 class PostView(DetailView):
@@ -90,3 +91,19 @@ class ContactView(View):
 class SuccessView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'blog_game/success.html', context={"title": "جزاكم الله خيرا"})
+
+
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q")
+        results = ''
+        if query:
+            results = Post.objects.filter(title__icontains=query)
+        paginator = Paginator(results, 6)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, "blog_game/search.html", context={
+            'title': 'search',
+            'results': page_obj,
+            'count': paginator.count,
+        })
