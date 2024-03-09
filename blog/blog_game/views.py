@@ -3,11 +3,12 @@ from django.contrib.auth import login, logout, authenticate
 from django.core.mail import send_mail, BadHeaderError
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Post
 from .forms import UserRegisterForm, UserLoginForm, ContactForm
+from taggit.models import Tag
 
 
 class HomeView(ListView):
@@ -24,6 +25,12 @@ class PostView(DetailView):
     template_name = "blog_game/post_detail.html"
     context_object_name = "post"
     slug_field = "url"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["lasts_posts"] = Post.objects.all().order_by('-id')[:3]
+
+        return context
 
 
 def register(request):
@@ -106,4 +113,16 @@ class SearchView(View):
             'title': 'search',
             'results': page_obj,
             'count': paginator.count,
+        })
+
+
+class TagView(View):
+    def get(self, request, slug, *args, **kwargs):
+        tag = get_object_or_404(Tag, slug=slug)
+        posts = Post.objects.filter(tag=tag)
+        common_tag = Post.tag.most_common()
+        return render(request, "blog_game/tag.html", context={
+            "title": f'#ТЕГ {tag}'.upper(),
+            "posts": posts,
+            "common_tag": common_tag,
         })

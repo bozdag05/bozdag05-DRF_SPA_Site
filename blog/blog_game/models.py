@@ -2,11 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 class Post(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название')
-    tag = models.CharField(max_length=200, verbose_name='Тег')
+    tag = TaggableManager()
     url = models.SlugField(allow_unicode=True, verbose_name='ссылка')
     information_card = RichTextUploadingField(blank=True, verbose_name='краткая информация')
     description = RichTextUploadingField(blank=True, verbose_name='Описание')

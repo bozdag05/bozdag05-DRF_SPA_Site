@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomeView, PostView, register, user_login, user_logout, ContactView, SuccessView, SearchView
+from .views import HomeView, PostView, register, user_login, user_logout, ContactView, SuccessView, SearchView, TagView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -9,5 +9,6 @@ urlpatterns = [
     path('contact/', ContactView.as_view(), name='contact'),
     path('contact/success/', SuccessView.as_view(), name='success'),
     path('search/', SearchView.as_view(), name='search'),
+    path('tag/<slug:slug>/', TagView.as_view(), name='tag'),
     path('<slug:slug>/', PostView.as_view(), name='post_detail'),
 ]

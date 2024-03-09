@@ -4,8 +4,8 @@ from .models import Post
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "tag", "author", "image", "url", "is_published")
-    list_editable = ("is_published",)
+    #list_display = ("title", "tag", "author", "image", "url", "is_published")
+    #list_editable = ("is_published",)
     prepopulated_fields = {'url': ['title']}
 
 
