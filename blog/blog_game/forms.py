@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
+from blog_game.models import Comment
+
 
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label='Имя пользователя', max_length=100,
@@ -30,3 +32,16 @@ class ContactForm(forms.Form):
     email = forms.CharField(label='Ваша почта', widget=forms.EmailInput(attrs={'class': "form-control"}))
     subject = forms.CharField(label='Тема', max_length=200, widget=forms.TextInput(attrs={'class': "form-control"}))
     message = forms.CharField(label='Сообщение', widget=forms.Textarea(attrs={'class': "form-control"}))
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control mb-3',
+                'rows': 3
+            }),
+        }
