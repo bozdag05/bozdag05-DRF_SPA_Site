@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blog_game.apps.BlogGameConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'taggit',
 ]
 
 MIDDLEWARE = [
