@@ -41,37 +41,37 @@
             <hr>
             <!--    ЭТО КОМПОНЕНТ С КОММЕНТАРИЯМИ -->
 
-                {% block comment %}
-                {% include "inc/_comments.html" %}
-                {% endblock %}
-
-            <!--    ЭТО ПРАВАЯ КОЛОНКА -->
-            <div class="col-md-4">
-                <div class="card my-4">
-                    <h5 class="card-header">Тег</h5>
-                    <div class="card-body">
-                        <div class="d-flex flex-wrap">
-                            {% for tag in post.tag.all %}
-                            {% if tag %}
-                            <a href="{% url 'tag' tag.slug %}" class="m-2 h5 text-primary">#{{ tag }}</a>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
+            {% block comment %}
+            {% include "inc/_comments.html" %}
+            {% endblock %}
+        </div>
+        <!--    ЭТО ПРАВАЯ КОЛОНКА -->
+        <div class="col-md-4">
+            <div class="card my-4">
+                <h5 class="card-header">Тег</h5>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        {% for tag in post.tag.all %}
+                        {% if tag %}
+                        <a href="{% url 'tag' tag.slug %}" class="m-2 h5 text-primary">#{{ tag }}</a>
+                        {% endif %}
+                        {% endfor %}
                     </div>
-                </div>
-                <div class="card my-4">
-                    <h5 class="card-header">Последние статьи</h5>
-                    {% for p in lasts_posts %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ p.title }}</h5>
-                        <p class="card-text">{{ p.information_card|safe }}</p>
-                        <a href="{% url 'post_detail' slug=p.url %}" class="card-link">Ссылка на статью</a>
-                    </div>
-                    <hr>
-                    {% endfor %}
                 </div>
             </div>
+            <div class="card my-4">
+                <h5 class="card-header">Последние статьи</h5>
+                {% for p in lasts_posts %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="card-text">{{ p.information_card|safe }}</p>
+                    <a href="{% url 'post_detail' slug=p.url %}" class="card-link">Ссылка на статью</a>
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
         </div>
+
     </div>
 </div>
 
